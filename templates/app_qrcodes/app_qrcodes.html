@@ -1,0 +1,17 @@
+ <!-- action usual -->
+ <!-- table qrcodes search -->
+ [#if VIEW_MODE="search_qrcodes" || VIEW_MODE=""#]
+  [#inc qrcodes_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table qrcodes search -->
+ <!-- table qrcodes edit -->
+ [#if VIEW_MODE="edit_qrcodes"#]
+   [#inc qrcodes_edit.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table qrcodes edit -->
+ <!-- table qrcodes view --> 
+ [#if VIEW_MODE="received"#]
+   [#inc qrcodes_view.html#]
+ [#endif VIEW_MODE#]
+
+ <!-- / table qrcodes view -->

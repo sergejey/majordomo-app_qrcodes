@@ -1,0 +1,65 @@
+
+<!-- table qrcodes search -->
+<p>
+<a href="?view_mode=edit_qrcodes&data_source=<#DATA_SOURCE#>" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> <#LANG_ADD_NEW_RECORD#></a>
+Usage: <#ROOTHTML#>popup/app_qrcodes.html?qr=&ltCODE&gt;
+</p>
+
+<table width=100% border=0><tr>
+<td valign=top>
+<!-- results -->
+[#if RESULT#]
+<!-- search results (list) -->
+<form action="?" method="post" name="frmList_qrcodes" style="padding:0px" class="form">
+<table  align=center class="table table-striped">
+<tbody>
+[#begin RESULT#]
+<tr style="height:52px" class="hover_btn2">
+ <td style="vertical-align:middle"
+  >
+  <b>
+  [#if TITLE!=""#]
+   [#TITLE#]
+  [#else#]
+   &nbsp;
+  [#endif#]
+  </a></b>
+ </td>
+ <td  style="vertical-align:middle">
+  [#if QRCODE!=""#]
+   <a href="<#ROOTHTML#>popup/app_qrcodes.html?qr=[#QRCODE#]" target=_blank>[#QRCODE#]</a>
+  [#else#]
+   &nbsp;
+  [#endif#]
+ </td>
+ <td style="vertical-align:middle"
+   >
+  [#if QRCODE!=""#]
+   <a href="<#ROOTHTML#>modules/app_qrcodes/qrcode/?data=[#QRCODE#]&size=8" target=_blank><img src="<#ROOTHTML#>modules/app_qrcodes/qrcode/?data=[#QRCODE#]" border="0"></a>
+  [#else#]
+   &nbsp;
+  [#endif#]
+ </td>
+ <td style="vertical-align:middle" width="1%" nowrap>
+  <div style="width:120px">
+  [#if "<#ACTION#>"=="admin"#]
+   <a href="?view_mode=edit_qrcodes&id=[#ID#]" class="btn btn-default" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+    <a href="?view_mode=delete_qrcodes&id=[#ID#]" onClick="return confirm('Are you sure?')" class="btn btn-default" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>
+  [#endif ACTION#]
+  </div>
+ </td>
+</tr>
+[#end RESULT#]
+</tbody>
+</table>
+<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
+<input type="hidden" name="view_mode" value="multiple_qrcodes">
+</form>
+<!-- / search results (list) -->
+[#else RESULT#]
+<p>
+<font color="red"><#LANG_NO_RECORDS_FOUND#></font>
+</p>
+[#endif RESULT#]
+<!-- / results -->
+</td></tr></table>

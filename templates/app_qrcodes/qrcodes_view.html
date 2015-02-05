@@ -1,0 +1,14 @@
+[#if NOT_FOUND="1"#]
+<div>Code <b>[#QRCODE#]</b> not found</div>
+&nbsp;
+<div><a href="?view_mode=create&qr=[#QRCODE#]"><#LANG_ADD#></a></div>
+[#else NOT_FOUND#]
+<div>
+<b>[#TITLE#]</b>
+</div>
+<div>
+[#HTML#]
+</div>
+&nbsp;
+<div><a href="?view_mode=edit_qrcodes&id=[#ID#]"><#LANG_EDIT#></a></div>
+[#endif NOT_FOUND#]

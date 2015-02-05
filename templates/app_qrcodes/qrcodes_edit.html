@@ -1,0 +1,201 @@
+
+<!-- Table 'qrcodes' edit -->
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" id="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-error"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend><#LANG_NEW_RECORD#></legend>
+[#endif ID#]
+<!-- TITLE (varchar) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_TITLE#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="title" value="[#TITLE#]" ></div>
+</div>
+<!-- QRCODE (varchar) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_QRCODE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_KEYWORD#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="qrcode" value="[#QRCODE#]" >
+[#if QRCODE!=""#]
+<a href="<#ROOTHTML#>modules/app_qrcodes/qrcode/?data=[#QRCODE#]&size=8" target=_blank><img src="<#ROOTHTML#>modules/app_qrcodes/qrcode/?data=[#QRCODE#]" border="0"></a>
+[#endif QRCODE#]
+
+ </div>
+</div>
+
+
+[#if ID!=""#]
+
+<script language="javascript">
+ function show_on_click_change(val) {
+  $('.show_fields').hide();
+  $('#'+val+'_field').show();
+  return false;
+ }
+</script>
+
+<div class="form-group">
+        <label class="col-lg-4 control-label"><#LANG_CONTENT_SOURCE#>:</label>
+        <div class="controls">
+                <select name="show_on_click" class="form-control" onChange="show_on_click_change(this.value);">
+                <option value="html">HTML				
+                <option value="menu"[#if MENU_ID!="0" && MENU_ID!=""#] selected[#endif#]><#LANG_SHOW_MENU_ON_CLICK#>
+                <option value="url"[#if EXT_URL!="" && EXT_URL!="http://"#] selected[#endif#]><#LANG_SHOW_URL_ON_CLICK#>
+                </select>
+        </div>
+</div>
+
+<div id="menu_field" class="show_fields"[#if MENU_ID="0" || MENU_ID=""#] style="display:none"[#endif#]>
+<!-- Menu -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_MENU_ID#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_SHOW_MENU_ON_CLICK#>:
+ </label>
+ <div class="col-lg-4">
+                <select name="menu_id" class="form-control">
+                <option value="0">
+                [#begin MENU_ITEMS#]
+                <option value="[#ID#]"[#if ID="<#MENU_ID#>"#] selected[#endif#]>[#TITLE#]
+                [#end MENU_ITEMS#]
+                </select>
+ </div>
+</div>
+</div>
+
+
+<div id="url_field" class="show_fields"[#if EXT_URL="" || EXT_URL="http://"#] style="display:none"[#endif#]>
+<!-- EXT_URL (url) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_EXT_URL#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_URL#>:
+ </label>
+ <div class="col-lg-4">
+  <input type="text" name="ext_url" value="[#EXT_URL#][#if EXT_URL=""#]http://[#endif#]" class="form-control">
+ </div>
+</div>
+</div>
+
+
+<div id="html_field" class="show_fields"[#if MENU_ID!="0" || (EXT_URL!="" && EXT_URL!="http://")#] style="display:none"[#endif#]>
+<!-- HTML (text) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_HTML#] style="color:red;font-weight:bold"[#endif#]>
+ HTML
+ :
+ </label>
+ <div class="col-lg-4">
+ <textarea name="html" rows=12 cols=100 class="form-control">[#HTML#]</textarea>
+ </div>
+</div>
+</div>
+
+<script language="javascript">
+ function do_on_click_change(val) {
+  $('.click_fields').hide();
+  $('#'+val+'_field').show();
+  return false;
+ }
+</script>
+
+<div class="form-group">
+        <label class="col-lg-4 control-label"><#LANG_DO_ONCLICK#></label>
+        <div class="controls">
+                <select name="do_on_click" class="form-control" onChange="do_on_click_change(this.value);">
+                <option value="0"><#LANG_DO_NOTHING#>
+                <option value="run_script"[#if SCRIPT_ID!="0" && SCRIPT_ID!=""#] selected[#endif#]><#LANG_RUN_SCRIPT_ON_CLICK#>
+                <option value="run_method"[#if LINKED_OBJECT!=""#] selected[#endif#]><#LANG_ONCHANGE_OBJECT#>.<#LANG_METHOD#>
+                <option value="run_code"[#if CODE!=""#] selected[#endif#]><#LANG_ONCHANGE_CODE#>
+                </select>
+        </div>
+</div>
+
+
+<div id='run_method_field' class="click_fields"[#if LINKED_OBJECT==""#] style="display:none"[#endif#]>
+<!-- LINKED_OBJECT (varchar) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_LINKED_OBJECT#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" id="linked_object" value="[#LINKED_OBJECT#]" ></div>
+</div>
+
+<!-- LINKED_METHOD (varchar) -->
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_LINKED_METHOD#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_METHOD#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="linked_method" id="linked_method" value="[#LINKED_METHOD#]" ></div>
+</div>
+
+[#module name="linkedobject" object_field="linked_object" method_field="linked_method"#]
+
+</div>
+
+
+<!-- SCRIPT_ID (int) -->
+<div id='run_script_field' class="click_fields"[#if SCRIPT_ID=="" || SCRIPT_ID="0"#] style="display:none"[#endif#]>
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_SCRIPT_ID#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_RUN_SCRIPT_ON_CLICK#>:
+ </label>
+ <div class="col-lg-4">
+<select name="script_id" class="form-control">
+                        <option value="0">
+                        [#begin SCRIPTS#]
+                                <option value="[#ID#]"[#if ID="<#SCRIPT_ID#>"#] selected[#endif#]>[#TITLE#]
+                                [#end SCRIPTS#]
+                   </select>    
+
+</div>
+</div>
+</div>
+
+<!-- CODE (text) -->
+<div id='run_code_field' class="click_fields"[#if CODE==""#] style="display:none"[#endif#]>
+<div class="form-group">
+ <label class="col-lg-3 control-label"[#if ERR_CODE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_ONCHANGE_CODE#>
+ :
+ </label>
+ <div class="col-lg-4">
+[#module name="blockly_code" system_name="qrcode<#ID#>" code_field="code" action=""#]
+                 <div id="code_area">
+                 <textarea name="code" id="code" rows=20 cols=100 class="field span10">[#CODE#]</textarea>
+                 </div>
+
+ </div>
+</div>
+</div>
+
+
+[#endif ID#]
+
+
+<div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+ [#if ID!=""#]
+ <button class="btn btn-default btn-primary" type="submit" name="subm"> <#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button class="btn btn-default btn-primary" type="submit" name="subm"> <#LANG_ADD#></button>
+ [#endif ID#]
+ [#if ACTION="admin"#]
+ <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+ [#else ACTION#]
+ <a href="<#ROOTHTML#>popup/app_qrcodes.html?qr=[#QRCODE#]" class="btn btn-default "><#LANG_CANCEL#></a>
+ [#endif ACTION#]
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+        </div>
+</div>
+</fieldset>
+</form>
