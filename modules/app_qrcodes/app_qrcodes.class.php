@@ -155,6 +155,11 @@ function admin(&$out) {
 * @access public
 */
  function codeReceived(&$out, $code) {
+
+  if (defined('SETTINGS_HOOK_BARCODE') && SETTINGS_HOOK_BARCODE!='') {
+   eval(SETTINGS_HOOK_BARCODE);
+  }
+
   $rec=SQLSelectOne("SELECT * FROM qrcodes WHERE QRCODE LIKE '".DBSafe($code)."'");
 
   if (!$rec['ID']) {
