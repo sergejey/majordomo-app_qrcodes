@@ -261,7 +261,7 @@ function usual(&$out) {
 *
 * @access private
 */
- function dbInstall() {
+ function dbInstall($data) {
 /*
 qrcodes - App_qrcodes
 */
